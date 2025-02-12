@@ -54,7 +54,12 @@ INSTALLED_APPS = [
     
     
     # Custom apps
-    'apps.news'
+    'apps.news',
+    'apps.about',
+    'apps.career',
+    'apps.projects',
+    'apps.events',
+    
     
 ]
 
