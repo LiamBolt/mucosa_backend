@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     
     # Third_party apps
     'rest_framework',
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,7 +72,7 @@ MIDDLEWARE = [
 
 # CORS Configuration
 CORS_ALLOWED_ORIGINS = [
-    os.environ.get('CORS_ALLOWED_ORIGIN', 'http://localhost:3000'),
+    os.environ.get('CORS_ALLOWED_ORIGIN', 'http://localhost:5173'),
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -148,6 +150,12 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),  # Ensure you have a static directory
+# ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Media file handling
@@ -187,6 +195,3 @@ CACHES = {
 }
 
 AUTH_USER_MODEL = 'news.Author'
-
-# Where Django collects static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
