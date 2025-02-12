@@ -1,4 +1,5 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -8,6 +9,13 @@ from .views import (
     ImpactMetricListAPIView,
     ContactSubmissionCreateAPIView
 )
+
+    # About API endpoints
+router = DefaultRouter()
+router.register(r'team', TeamMemberListAPIView.as_view(), basename='team-member-list'),
+router.register(r'impact', ImpactMetricListAPIView.as_view(), basename='impact-metric-list'),
+router.register(r'contact', ContactSubmissionCreateAPIView.as_view(), basename='contact-submission-create'),
+    
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,13 +32,9 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    # About API endpoints
-    path('team/', TeamMemberListAPIView.as_view(), name='team-member-list'),
-    path('impact/', ImpactMetricListAPIView.as_view(), name='impact-metric-list'),
-    path('contact/', ContactSubmissionCreateAPIView.as_view(), name='contact-submission-create'),
-    
+
     # Swagger UI documentation endpoint
-    path('about/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     # ReDoc documentation endpoint for an alternative view
-    path('about/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
