@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
+
 # Skill used in Roadmap items
 class Skill(models.Model):
     name = models.CharField(max_length=100, unique=True, db_index=True)
@@ -48,7 +49,9 @@ class RoadmapItem(models.Model):
     title = models.CharField(max_length=255, db_index=True)
     description = models.TextField()
     icon_url = models.URLField(max_length=500)
-    skills = models.ManyToManyField(Skill, related_name='roadmap_items', blank=True)
+    skills = models.ManyToManyField(Skill,
+                                    related_name='roadmap_items',
+                                    blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -71,6 +74,7 @@ EMPLOYMENT_TYPE_CHOICES = (
     ('contract', 'Contract'),
     ('internship', 'Internship'),
 )
+
 
 class Job(models.Model):
     title = models.CharField(max_length=255, db_index=True)
